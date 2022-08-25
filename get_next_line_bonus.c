@@ -84,15 +84,15 @@ char	*ft_readtosave(int fd, char *save)
 
 char    *get_next_line(int fd)
 {
-    static char *buff_save;
+    static char *buff_save[1024];
     char        *line;
 
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (0);
-    buff_save = ft_readtosave(fd, buff_save);
-    if (!buff_save)
+    buff_save[fd] = ft_readtosave(fd, buff_save[fd]);
+    if (!buff_save[fd])
         return (NULL);
-    line = ft_copyline(buff_save);
-    buff_save = ft_savenextline(buff_save);
+    line = ft_copyline(buff_save[fd]);
+    buff_save[fd] = ft_savenextline(buff_save[fd]);
     return (line);
 }
