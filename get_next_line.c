@@ -81,7 +81,6 @@ char	*ft_readtosave(int fd, char *save)
 	return (save);
 }
 
-
 char    *get_next_line(int fd)
 {
     static char *buff_save;
@@ -95,4 +94,23 @@ char    *get_next_line(int fd)
     line = ft_copyline(buff_save);
     buff_save = ft_savenextline(buff_save);
     return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*str;
+	int		i;
+
+	i = 1;
+	fd = open("text", O_RDONLY);
+	while (1)
+	{
+		str = get_next_line(fd);
+		printf("Line %i: %s", i, str);
+		if (!str)
+			break ;
+		free(str);
+		i++;
+	}
 }
