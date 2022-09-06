@@ -9,14 +9,12 @@ char    *ft_savenextline(char *save)
     i = 0;
     while (save[i] && save[i] != 10)
         i++;
-    if (!save[i])
+    i++;
+    if (!save[i - 1] || save[i] != 10)
     {
         free(save);
         return (NULL);
     }
-    i++;
-    if (!save[i])
-        return (NULL);
     buff = malloc(sizeof(char) * ((ft_strlen(save) - i) + 1));
     if (!buff)
         return (NULL);
@@ -95,4 +93,23 @@ char    *get_next_line(int fd)
     line = ft_copyline(buff_save[fd]);
     buff_save[fd] = ft_savenextline(buff_save[fd]);
     return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	static char	*str;
+	int		i;
+
+	i = 1;
+	fd = open("text", O_RDONLY);
+	while (1)
+	{
+		str = get_next_line(fd);
+		printf("Line %i: %s", i, str);
+		if (!str)
+			break ;
+		free(str);
+		i++;
+	}
 }

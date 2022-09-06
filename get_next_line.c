@@ -15,8 +15,11 @@ char    *ft_savenextline(char *save)
         return (NULL);
     }
     i++;
-    if (!save[i])
+    if (save[i] =! 10 && !save[i + 1])
+    {
+        free (save);
         return (NULL);
+    }
     buff = malloc(sizeof(char) * ((ft_strlen(save) - i) + 1));
     if (!buff)
         return (NULL);
@@ -99,7 +102,7 @@ char    *get_next_line(int fd)
 int	main(void)
 {
 	int		fd;
-	char	*str;
+	static char	*str;
 	int		i;
 
 	i = 1;
